@@ -15,15 +15,20 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition($company_id = false): array
     {
-        return [
+        $user = [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'company_id' => 1,
         ];
+
+        if ($company_id) $user['company_id'] = $company_id;
+
+        return $user;
     }
 
     /**

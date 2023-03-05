@@ -1,0 +1,20 @@
+It's essential you have visibility of the performance of your DB and queries.
+
+Laravel Debug Bar
+-----------------
+- composer require barryvdh/laravel-debugbar --dev
+
+- Check page load time towards the right of the debug bar. You should aim for less then 1000ms.
+- Look at the number of queries. Can it be reduced by n+1 etc?
+- Do you need indexing on any queries using orderBy?
+- Look at the Models tabs to see how many models are being loaded. An unexpectedly high number might
+give you an idea of why it is slow.
+
+
+
+
+
+
+
+Checklist
+----------

@@ -18,3 +18,5 @@ give you an idea of why it is slow.
 
 Checklist
 ----------
+- Are you using the $with attribute anywhere?
+- Do you need indexing?

@@ -9,7 +9,8 @@ Laravel Debug Bar
 - Do you need indexing on any queries using orderBy?
 - Look at the Models tabs to see how many models are being loaded. An unexpectedly high number might
 give you an idea of why it is slow.
-
+- The Memory Usage tab can give you a rough insite into what is going on. Laravel uses roughly 4mb of
+memory by itself. Anything significantly over this should be a warning sign.
 
 
 
@@ -20,3 +21,4 @@ Checklist
 ----------
 - Are you using the $with attribute anywhere?
 - Do you need indexing?
+- Are you selecting only the columns you need?

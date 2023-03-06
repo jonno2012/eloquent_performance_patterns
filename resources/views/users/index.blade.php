@@ -57,7 +57,8 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->last_login->diffForHumans() }}</td>
+                                    <td>{{ $user->lastLogincreated_at->diffForHumans() }}</td>
+                                    <td>{{ $user->lastLogin->ip_address }}</td>
                                     <td>{{ $user->company->name }}</td>
                                     <td><a href="{{ route('users.edit', $user->id) }}">Edit</a></td>
                                 </tr>

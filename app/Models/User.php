@@ -64,4 +64,38 @@ class User extends Authenticatable
     ])
         ->withCasts(['last_login_at' => 'datetime']); // to cast it to a datetime object so  diffForHumans can use it
     }
+
+    public function scopeWithLastLogIpAddress(Builder $query)
+    {
+        $query->addSelect(['last_login_ip_address' => Login::select('ip_address')
+            ->whereColumn('user_id', 'users.id')
+            ->latest()
+            ->take(1)
+        ]); // to cast it to a datetime object so  diffForHumans can use it
+    }
+
+    // making scopes like this for every property you want to get on a related model can be tedious and messy
+    // We can use dynamic relationships instead.
+
+    public function lastLogin()
+    {
+        return $this->hasOne(Login::class)->latest(); // this will mean that we will have to eager load
+        // so we are left with the issue of having to eager load all models just to obtain the last one, as explained
+        // in the previous commit. this is why using sub-queries to make dynamic loading is so powerful.
+
+    }
+
+    public function scopeWithLastLogin($query)
+    {
+        $query->addSelect(['last_login_id' => Login::select('id')
+            ->whereColumn('user_id', 'users.id')
+            ->latest()
+            ->take(1)
+        ])->with('lastLogin'); // laravel doesn't know this isn't a real model rel and so will just create it on the fly
+    }
+
+    public function last()
+    {
+
+    }
 }

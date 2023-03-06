@@ -46,6 +46,8 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Email</th>
+                                <th>Last Login</th>
                                 <th>Company</th>
                                 <th></th>
                             </tr>
@@ -54,6 +56,8 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->last_login->diffForHumans() }}</td>
                                     <td>{{ $user->company->name }}</td>
                                     <td><a href="{{ route('users.edit', $user->id) }}">Edit</a></td>
                                 </tr>

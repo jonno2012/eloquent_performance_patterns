@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\Login;
+
 class UserController extends Controller
 {
     /**
@@ -12,10 +14,16 @@ class UserController extends Controller
      */
     public function index(): View
     {
+//        $users = User::query()
+//            ->with('company')
+//            ->orderBy('name')
+//            ->paginate();
+
+        // sub queries can be used to get a small result set from a related model:
         $users = User::query()
-            ->with('company')
+            ->withLastLogin()
             ->orderBy('name')
-            ->simplePaginate();
+            ->paginate();
 
         return view('users.index', ['users' => $users]);
     }

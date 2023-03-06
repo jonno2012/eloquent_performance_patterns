@@ -12,6 +12,13 @@ give you an idea of why it is slow.
 - The Memory Usage tab can give you a rough insite into what is going on. Laravel uses roughly 4mb of
 memory by itself. Anything significantly over this should be a warning sign.
 
+- Eager loading models can sound like a good idea but can actually lead to large numbers of models being loaded
+when you might only need the last one. You can use caching but this can add more complexity into your
+application. e.g. you could add a foreign key call last_login_id on the users table. This is a form of caching.
+- A sub-query could be the solution. It is important to know that DBs are optimised for running this kind of query
+whereas Laravel and PHP are not optimised to sort through result sets in the same way. So try and user the query language
+to extract only the data you need.
+
 
 
 

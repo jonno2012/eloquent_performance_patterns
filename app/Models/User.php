@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -47,5 +48,20 @@ class User extends Authenticatable
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function logins()
+    {
+        return $this->hasMany(Login::class);
+    }
+
+    public function scopeWithLastLoginAt(Builder $query)
+    {
+        $query->addSelect(['last_login_at' => Login::select('created_at')
+        ->whereColumn('user_id', 'users.id')
+        ->latest()
+        ->take(1)
+    ])
+        ->withCasts(['last_login_at' => 'datetime']); // to cast it to a datetime object so  diffForHumans can use it
     }
 }

@@ -24,8 +24,11 @@ to extract only the data you need.
 
 
 
+
 Checklist
 ----------
 - Are you using the $with attribute anywhere?
 - Do you need indexing?
 - Are you selecting only the columns you need?
+- are you using dynamic queries instead of eager loading all models?
+- Are you repeating queries when you can use the whereRaw thing as per commit?

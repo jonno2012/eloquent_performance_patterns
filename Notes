@@ -25,9 +25,6 @@ if the query has the % wildcard symbols. Sometimes you just have to experiment w
 to see how you can get the query to work with indexes.
 
 
-
-
-
 Checklist
 ----------
 - Are you using the $with attribute anywhere?
@@ -36,3 +33,4 @@ Checklist
 - are you using dynamic queries instead of eager loading all models?
 - Are you repeating queries when you can use the whereRaw thing as per commit?
 - Can you use setRelationship to avoid circular relationships.
+- Can you use subqueries instead of whereHas to get sql to use indexes?

@@ -28,6 +28,16 @@ class UserController extends Controller
         return view('users.index', ['users' => $users]);
     }
 
+    public function searchIndex()
+    {
+        $users = User::query()
+            ->search(request('search'))
+            ->with('company')
+            ->paginate();
+
+        return view('users.index', ['users' => $users]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

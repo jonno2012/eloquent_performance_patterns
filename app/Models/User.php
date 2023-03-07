@@ -99,10 +99,12 @@ class User extends Authenticatable
 
     }
 
+    // this may produce a slow query without any indexes
     public function scopeSearch($query, string $terms = null)
     {
-        collect(explode(' ', $terms))->filter()->each(function($term) use ($query) {
-            $term = '%'.$term.'%';
+        // the user will have to use "" around a term to be used as a complete term.
+        collect(str_getcsv($terms, ' ', '"'))->filter()->each(function($term) use ($query) {
+            $term = $term.'%';
             $query->where(function ($query) use ($term) {
                 $query->where('first_name', 'like', $term)
                     ->orWhere('last_name', 'like', $term)

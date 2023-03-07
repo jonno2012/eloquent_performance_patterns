@@ -32,3 +32,4 @@ Checklist
 - Are you selecting only the columns you need?
 - are you using dynamic queries instead of eager loading all models?
 - Are you repeating queries when you can use the whereRaw thing as per commit?
+- Can you use setRelationship to avoid circular relationships.

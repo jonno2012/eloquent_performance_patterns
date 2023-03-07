@@ -65,7 +65,14 @@ class FeatureController extends Controller
      */
     public function show(Feature $feature)
     {
-        //
+//        $feature->load('comments.user', 'comments.feature.comments'); // contains circular relationship
+        $feature->load('comments.user');
+        $feature->comments->each->setRelationship('feature', $feature); // set the relationship manually to avoid circular relationship
+
+        return view('feature', ['feature' => $feature]);
+
+
+        return view('feature', ['feature' => $feature]);
     }
 
     /**

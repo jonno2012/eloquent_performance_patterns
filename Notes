@@ -34,6 +34,8 @@ must have the same columns selected. Check the select_type column in EXPLAIN. If
 UNION this will mean that the indexed columns are not having their indexes used during the query. To avoid this we
 can use a 'derived table'. All you have to do is add an alias to the outside of the subquery.
 
+- We can use regexp to normalize searchable terms.
+
 Checklist
 ----------
 - Are you using the $with attribute anywhere?
@@ -44,3 +46,4 @@ Checklist
 - Can you use setRelationship to avoid circular relationships.
 - Can you use subqueries instead of whereHas to get sql to use indexes?
 - Can you use UNIONS and derived tables to optimise separate but related queries.
+- Could you use regexp to normalize searchable fields?

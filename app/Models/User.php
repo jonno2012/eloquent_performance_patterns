@@ -104,21 +104,21 @@ class User extends Authenticatable
     {
         // the user will have to use "" around a term to be used as a complete term.
         collect(str_getcsv($terms, ' ', '"'))->filter()->each(function($term) use ($query) {
-            $term = $term.'%';
+            $term = preg_replace('/[^A-Za-z0-9]/', '', $term).'%';
 
             $query->whereIn('id', function($query) use ($term) {
                 $query->select('id')
                     ->from(function ($query) use ($term) {
                         $query->select('id')
                             ->from('users')
-                            ->where('first_name', 'like', $term)
-                            ->orWhere('last_name', 'like', $term)
+                            ->where('first_name_normalized', 'like', $term)
+                            ->where('last_name_normalized', 'like', $term)
                             ->union(
                                 $query->newQuery()
                                 ->select('users.id')
                                 ->from('users')
                                 ->join('companies', 'companies.id', '=', 'users.company_id')
-                                ->where('companies.name', 'like', $term)
+                                    ->where('companies.name_normalized', 'like', $term)
                             );
                     }, 'matches');
             });

@@ -24,6 +24,9 @@ table, you will see that there are no possible_keys and key values. MYSQL is no 
 if the query has the % wildcard symbols. Sometimes you just have to experiment with the queries in your sql client
 to see how you can get the query to work with indexes.
 
+- Sometimes it is not possible to get an index to work on all parts of a query (top-level query and subqueries). Sometimes
+it may end up being more performant to run a query as separate queries. Try experimenting with EXPLAIN (to see what
+has been indexed) and laravel debugbar (to see query performance).
 
 Checklist
 ----------

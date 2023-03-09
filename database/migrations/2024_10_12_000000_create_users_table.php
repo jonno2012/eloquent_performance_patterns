@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
+            $table->string('first_name')->index();
             $table->string('first_name_normalized')
                 ->virtualAs("regexp_replace(first_name, '[^A-Za-z0-9]', '')")->index();
-            $table->string('last_name');
+            $table->string('last_name')->index();
             $table->string('last_name_normalized')
                 ->virtualAs("regexp_replace(last_name, '[^A-Za-z0-9]', '')")->index();
             $table->string('email')->unique();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->rememberToken()->nullable();
             $table->boolean('is_owner')->default(false);
+            $table->index(['last_name', 'first_name']); // compound index. The order here matters depending on the order by query order.
             $table->timestamps();
         });
     }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
-use App\Models\Login;
 
 class UserController extends Controller
 {
@@ -30,6 +29,7 @@ class UserController extends Controller
 
     public function searchIndex()
     {
+        $r = Feature::query();
         $users = User::query()
             ->search(request('search'))
             ->with('company')

@@ -34,6 +34,11 @@ must have the same columns selected. Check the select_type column in EXPLAIN. If
 UNION this will mean that the indexed columns are not having their indexes used during the query. To avoid this we
 can use a 'derived table'. All you have to do is add an alias to the outside of the subquery.
 
+
+Performant Laravel
+-------------------
+
+
 - We can use regexp to normalize searchable terms.
 
 Checklist

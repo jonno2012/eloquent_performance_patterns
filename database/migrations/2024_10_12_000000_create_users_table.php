@@ -26,6 +26,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('password')->nullable();
             $table->rememberToken()->nullable();
+            $table->boolean('is_owner')->default(false);
             $table->timestamps();
         });
     }

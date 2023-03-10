@@ -30,7 +30,7 @@ class UserController extends Controller
 
     public function indexHasOne()
     {
-            // we don't want to use a subquery when ordering by with a hasOne relationships
+            // we don't want to use a subquery when ordering by a hasOne relationships
 //        $users = User::query()
 //            ->orderBy(Company::select('name')
 //                ->whereColumn('users_id', 'users.id')
@@ -42,9 +42,32 @@ class UserController extends Controller
 
         $users = User::query(0)
             ->join('companies', 'companies', '=', 'users.id')
-            ->with('company')
             ->orderBy('companies.name')
+            ->with('company')
             ->paginate();
+
+        return view('users', ['users' => $users]);
+    }
+
+    public function indexBelongsTo()
+    {
+        // when ordering with a belongsTo relationship use the join approach
+
+        // The join approach 1ms
+        $users = User::query(0)
+            ->select('users.*')
+            ->join('companies', 'companies.id', '=', 'users.company_id')
+            ->orderBy('companies.name')
+            ->with('company')
+            ->paginate();
+
+        // the subquery approach 77ms
+//        $user = User::query()
+//            ->orderBy(Company::select('name')
+//            ->whereColumn('id', 'users.company_id')
+//            ->orderBy('name')
+//                ->take(1)
+//            );
 
         return view('users', ['users' => $users]);
     }

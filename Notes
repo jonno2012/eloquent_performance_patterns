@@ -46,6 +46,8 @@ this is a compound index.
 
 - When ordering by a rel model, i.e. with a hasOne rel, use joins, not subqueries.
 
+- When ordering by belongsTo use a join.
+
 Checklist
 ----------
 - Are you using the $with attribute anywhere?
@@ -58,3 +60,4 @@ Checklist
 - Can you use UNIONS and derived tables to optimise separate but related queries.
 - Could you use regexp to normalize searchable fields?
 - Are you using orderBy on your pagination?
+- Are you using joins for you hasMany and BelongsTo rels

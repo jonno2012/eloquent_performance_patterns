@@ -42,8 +42,9 @@ Performant Laravel
 - Using multiple fields in the order by clause will mean that normal indexing will not work. The solution to
 this is a compound index.
 
-
 - We can use regexp to normalize searchable terms.
+
+- When ordering by a rel model, i.e. with a hasOne rel, use joins, not subqueries.
 
 Checklist
 ----------

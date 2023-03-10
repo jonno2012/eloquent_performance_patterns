@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
@@ -25,6 +26,27 @@ class UserController extends Controller
             ->paginate();
 
         return view('users.index', ['users' => $users]);
+    }
+
+    public function indexHasOne()
+    {
+            // we don't want to use a subquery when ordering by with a hasOne relationships
+//        $users = User::query()
+//            ->orderBy(Company::select('name')
+//                ->whereColumn('users_id', 'users.id')
+//                ->orderBy('name')
+//                ->take(1)
+//            )
+//            ->with('company')
+//            ->paginate();
+
+        $users = User::query(0)
+            ->join('companies', 'companies', '=', 'users.id')
+            ->with('company')
+            ->orderBy('companies.name')
+            ->paginate();
+
+        return view('users', ['users' => $users]);
     }
 
     public function searchIndex()

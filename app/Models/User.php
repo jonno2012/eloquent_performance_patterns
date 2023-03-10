@@ -125,4 +125,13 @@ class User extends Authenticatable
         }); // this now runs as 3 separate queries but each query runs ultra-fast because the query now uses the
         // indexes.
     }
+
+    public function orderByLastLogin($query)
+    {
+        $query->orderByDesc(Login::select('created_at')
+        ->whereColumn('user_id', 'users.id')
+        ->latest()
+        ->take(1)
+        );
+    }
 }

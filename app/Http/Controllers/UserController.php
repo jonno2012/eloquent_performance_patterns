@@ -6,6 +6,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\Login;
 
 class UserController extends Controller
 {
@@ -70,6 +71,33 @@ class UserController extends Controller
 //            );
 
         return view('users', ['users' => $users]);
+    }
+
+    public function indexHasManyOrderBy()
+    {
+        // we will try and order by a HasMAny relationship. This is tricky because you
+        // can get a record returned for every instance of the hasMany rel of the belongsTo
+        // i.e. this will return a row for the same user for every time they have been logged in.
+
+        // we can solve this by groupBy users.id and then by telling sql which hasMany rel to order by (otherwise you
+        // will get an sql error (..clause is not in group by clause... because sql will not know which instance of
+        // the hasMany to use to do the orderBy
+
+//        $users = User::query() // 42ms
+//            ->select('users.*') // only get these columns. you can omit to return all.
+//            ->join('logins', 'logins.users_id', '=', 'users.id')
+//            ->groupBy('users.id')
+//            ->orderByRaw('max(logins.created_at)')
+//            ->withLastLogin() // dynamic rel
+//            ->paginate();
+
+        // when order by a hasMany use a subquery like this
+        $users = User::query()
+            ->orderByLastLogin()
+            ->withLastLogin() // dynamic rel
+            ->paginate();
+
+        return View::make('users', ['users' => $users]);
     }
 
     public function searchIndex()

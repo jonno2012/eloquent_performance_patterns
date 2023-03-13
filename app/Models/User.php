@@ -134,4 +134,11 @@ class User extends Authenticatable
         ->take(1)
         );
     }
+
+    public function book()
+    {
+        return $this->belongsToMany(Book::class, 'books')
+            ->using(Checkout::class)
+            ->withPivot('borrowed_date');
+    }
 }

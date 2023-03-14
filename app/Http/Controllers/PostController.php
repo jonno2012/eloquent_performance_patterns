@@ -22,6 +22,23 @@ class PostController extends Controller
         return view('posts', ['years' => $years]);
     }
 
+    public function indexFullTextSearching()
+    {
+        $posts = Post::query()
+            ->with('author')
+            ->when(request('search'), function ($query, $search) {
+                $query->selectRaw('*, match(title, body) against(? in boolean mode) as score', [$search])
+                    ->whereRaw('match(title, body) against(? in boolean mode)', [$search]);
+            }, function ($query) {
+                $query->latest('published_at'); // the third arg in the when callback is triggered when the truthy check fails
+                // and so will be called when there is no search query
+            })
+            ->paginate();
+
+        return view('posts.index', ['posts' => $posts]);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      */

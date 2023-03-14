@@ -57,6 +57,8 @@ this is a compound index.
 We can create DB functions in the DB to add our own natural sorting functionality to the DB. * It is possible
 to create an index using a custom function in some SQL DBs including Postgres 4, but not currently in MYSQL
 
+- We can add fulltext indexing to migrations e.g. Google fulltext searching using against in boolean mode.
+
 Checklist
 ----------
 - Are you using the $with attribute anywhere?

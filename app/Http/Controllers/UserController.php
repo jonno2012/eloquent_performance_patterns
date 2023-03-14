@@ -100,6 +100,18 @@ class UserController extends Controller
         return View::make('users', ['users' => $users]);
     }
 
+    public function indexOrderByNull()
+    {
+        $users = User::query()
+            ->when(request('sort') === 'town', function($query) {
+                $query->orderByRaw('town is NULL')
+                    ->orderBy('town', request('direction'));
+            })
+            ->paginate();
+
+        return view('users.index', ['users' => $users]);
+    }
+
     public function searchIndex()
     {
         $r = Feature::query();

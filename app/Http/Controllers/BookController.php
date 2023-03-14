@@ -25,6 +25,17 @@ class BookController extends Controller
 
     }
 
+    public function indexOrderWithNull()
+    {
+        $books = Book::query()
+            ->with('user')
+            ->orderByRaw('user_id is NULL')
+            ->orderBy('name')
+            ->paginate();
+
+        return view('books.index', ['books' => $books]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -31,9 +31,6 @@ class FeatureController extends Controller
             ->selectRaw("count(case when status = 'Completed' then 1 end) as completed")
             ->first();
 
-
-
-
         $features = Feature::query()
             ->withCount('comments')
             ->paginate();
@@ -42,6 +39,23 @@ class FeatureController extends Controller
 
 
 
+    }
+
+    public function indexOrderingByCustomAlgorithms()
+    {
+        $features = Feature::query()
+            ->withCount('comments', 'votes') // withCount will add the number of related records
+                ->when(request('sort'), function($query, $sort) {
+                    switch ($sort) {
+                        case 'title': return $query->orderBy('title', request('direction'));
+                        case 'status': return $query->orderByStatus(request('direction'));
+                        case 'activity': return $query->orderByActivity(request('direction'));
+                    }
+            })
+            ->latest()
+            ->paginate();
+
+        return view('features.index', ['features' => $features]);
     }
 
     /**

@@ -34,6 +34,9 @@ must have the same columns selected. Check the select_type column in EXPLAIN. If
 UNION this will mean that the indexed columns are not having their indexes used during the query. To avoid this we
 can use a 'derived table'. All you have to do is add an alias to the outside of the subquery.
 
+- The default ordering mechanisms of the DB (i.e. alphabetic, numeric etc) may not be enough to meet your requirements. When
+ this happens we can use Custom Algorithms. IT is also possible to add an index on a custom algorithm.
+
 Performant Laravel
 -------------------
 
@@ -64,3 +67,5 @@ Checklist
 - Are you using orderBy on your pagination?
 - Are you using joins for you hasMany and BelongsTo rels
 - are you using subqueries for ordering by a hasMany rel?
+- are you indexing your custom algorithms?
+- can you use denormalisation where indexing can't be used?

@@ -1,4 +1,5 @@
 It's essential you have visibility of the performance of your DB and queries.
+* Seeders for all content is available in course content.
 
 Laravel Debug Bar
 -----------------
@@ -9,7 +10,7 @@ Laravel Debug Bar
 - Do you need indexing on any queries using orderBy?
 - Look at the Models tabs to see how many models are being loaded. An unexpectedly high number might
 give you an idea of why it is slow.
-- The Memory Usage tab can give you a rough insite into what is going on. Laravel uses roughly 4mb of
+- The Memory Usage tab can give you a rough insight into what is going on. Laravel uses roughly 4mb of
 memory by itself. Anything significantly over this should be a warning sign.
 
 - Eager loading models can sound like a good idea but can actually lead to large numbers of models being loaded
@@ -58,6 +59,10 @@ We can create DB functions in the DB to add our own natural sorting functionalit
 to create an index using a custom function in some SQL DBs including Postgres 4, but not currently in MYSQL
 
 - We can add fulltext indexing to migrations e.g. Google fulltext searching using against in boolean mode.
+
+- For details on how to add geometric shape to map see course content.
+
+- For complete geospatial code see course content.
 
 Checklist
 ----------

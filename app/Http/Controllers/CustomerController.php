@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Region;
+use Cassandra\Custom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -33,6 +35,27 @@ class CustomerController extends Controller
             ->paginate();
 
         return view ('customers', ['customers' => $customers]);
+    }
+
+    public function indexFilterByGeoSpacialArea()
+    {
+        $regions = Region::all();
+
+        $customers = Customer::query()
+            ->inRegion(Region::where('name', 'The Prairies')->first())
+            ->get();
+
+        return view('customer', [
+            'customers' => $customers,
+            'regions' => $regions
+        ]);
+    }
+
+    public function findRegionBasedOnCustomer()
+    {
+        $customers = Customer::inRandomOrder()->take(1)->get();
+
+        $regions = Region::hasCustomer($customers->first())->get();
     }
 
     /**

@@ -22,4 +22,9 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeInRegions($query, Region $region)
+    {
+        $query->whereRaw('ST_Contains(?, customers.location)', [$region->geometry]);
+    }
 }

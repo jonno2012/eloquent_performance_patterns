@@ -21,4 +21,22 @@ class Store extends Model
             ST_SRID(Point?, ?), 4326)
             ) as distance', $coordinates);
     }
+
+    public function scopeWithinDistanceTo($query, $coordinates, $distance)
+    {
+        $query->whereRaw('ST_Distance(
+            ST_SRID(Point(longitude, latitude), 4326),
+            ST_SRID(Point(?, ?), 4326)
+            ) <= ?', [...$coordinates, $distance]);
+    }
+
+    public function scopeOrderByDistanceTo($query, array $coordinates, string $direction = 'asc')
+    {
+        $direction = strtolower($direction) === 'asc' ? 'asc' : 'desc';
+
+        $query->orderByRaw('ST_Distance(
+            location,
+            ST_SRID(Point(?, ?), 4326)
+            )'.$direction, $coordinates);
+    }
 }

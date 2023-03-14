@@ -19,6 +19,19 @@ class StoreController extends Controller
         return view('stores.index', ['stores' => $stores]);
     }
 
+    public function indexFilterByGeographicDistance()
+    {
+        $myLocation = [-79.47, 43.14];
+
+        $stores = Store::query()
+            ->selectDistanceTo($myLocation)
+            ->withinDistanceTo($myLocation, 10000) // second arg is distance in metres
+            ->orderByDistance()
+            ->paginate();
+
+        return view('stores.index', ['stores' => $stores]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

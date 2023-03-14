@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Model;
 
 class Customer extends Model
 {
@@ -16,5 +16,10 @@ class Customer extends Model
         }
 
         $query->where('sales_rep_id', $user->id);
+    }
+
+    public function salesRep()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -25,6 +25,16 @@ class CustomerController extends Controller
         return view ('customers', ['customers' => $customers]);
     }
 
+    public function indexNPlus1()
+    {
+        $customers = Customer::query()
+            ->with('salesRep')
+            ->orderBy('name')
+            ->paginate();
+
+        return view ('customers', ['customers' => $customers]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -53,6 +53,10 @@ this is a compound index.
 
 - When ordering by a hasMany, use a subquery
 
+- Natural sorting can be used for sorting numbers. However DBs do not support natural sorting natively.
+We can create DB functions in the DB to add our own natural sorting functionality to the DB. * It is possible
+to create an index using a custom function in some SQL DBs including Postgres 4, but not currently in MYSQL
+
 Checklist
 ----------
 - Are you using the $with attribute anywhere?

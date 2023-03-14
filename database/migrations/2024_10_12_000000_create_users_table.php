@@ -29,6 +29,9 @@ return new class extends Migration
             $table->boolean('is_owner')->default(false);
             $table->index(['last_name', 'first_name']); // compound index. The order here matters depending on the order by query order.
             $table->timestamps();
+            $table->rawIndex("(date_format(birth_date, '%m-%d')), name", 'users_birthday_name_index');// compound index (when ordering
+            // by more than one column). in this case we are also using an expression. it is not possible to add a normal index to an index
+            // which is evaluated
         });
     }
 

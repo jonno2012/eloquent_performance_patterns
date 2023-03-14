@@ -3,12 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -140,5 +142,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Book::class, 'books')
             ->using(Checkout::class)
             ->withPivot('borrowed_date');
+    }
+
+    public function scopeOrderByBirthday($query) // order by the month and day, not year
+    {
+        $query->ordeByRaw('date_format(birth_date, "%-%d)');
+    }
+
+    public function scopeWhereBirthdayThisWeek($query)
+    {
+        Carbon::setTestNow(Carbon::parse('January 1, 2020')); // you need this line. It gets Carbon to act as though
+        // the current day is Jan 1st. This is because if Jan 1st falls within the current week the date functions will not work as we intend
+
+        $dates = Carbon::now()->startOfWeek()
+            ->daysUntil(Carbon::now()->endOfWeek())
+            ->map(fn ($date) => $date->format('m-d'));
+
+        $query->whereRaw('date_format(birth_date, "%m-%d") in (?,?,?,?,?,?,?)', iterator_to_array($dates));
     }
 }

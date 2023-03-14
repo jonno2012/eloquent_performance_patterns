@@ -103,6 +103,7 @@ class UserController extends Controller
     public function indexOrderByNull()
     {
         $users = User::query()
+            ->whereBirthdayThisWeek()
             ->when(request('sort') === 'town', function($query) {
                 $query->orderByRaw('town is NULL')
                     ->orderBy('town', request('direction'));

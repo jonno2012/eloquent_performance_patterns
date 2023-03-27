@@ -1,0 +1,27 @@
+MyISAM
+-------
+- Holds data in memory
+- MyISAM is faster when you insert, update, or delete large amounts of data, as the database doesn’t have to use disk space
+- Doesn't support transactions
+- Performance with large volumes of data leaves a lot to be desired in comparison with InnoDB.
+- No foreign key constraints
+- In MyISAM, there is a key buffer that is used for indexes
+
+InnoDB
+------
+- Uses disk space for storage
+- InnoDB is more efficient at indexing and retrieving information, and is generally a far more advanced and preferred option
+- InnoDB is a transactional storage engine and can do transactions with rollbacks if the transaction doesn't complete
+- InnoDB offers full ACID compliance (Atomic, Consistency, Isolation, Durability) whereas MyIsam does not
+- The performance of InnoDB with large volumes of data is better than that of MyISAM
+- InnoDB offers flexible row-level locks while MyISAM can only do table-level locks. The crash recovery in InnoDB is also superior
+- In InnoDB, there is a large buffer pool that can be used to store both data and indexes
+
+When it is better to use MyISAM and when you should use InnoDB
+----------------------------------------------------------------
+If a MyISAM table has an issue, it will only affect the table. If there are any problems with other tables or databases, they will not affect
+the operations of other tables or databases. Therefore, MyISAM can be recommended for servers with multiple sites.
+
+The InnoDB storage engine is recommended for frequent operations with tables. It has better performance, better functionality,
+and can also substantially reduce memory usage on the server. Naturally, it is generally preferred over MyISAM. Still, it is worth noting that,
+because issues with InnoDB tables can cause data loss in other InnoDB tables, it is important to make sure you have enabled automatic backups.

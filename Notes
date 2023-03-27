@@ -69,7 +69,9 @@ Checklist
 - Are you using the $with attribute anywhere?
 - Do you need indexing?
 - Are you selecting only the columns you need?
-- are you using dynamic queries instead of making a separate scope for every rel model attribute?
+- are you using dynamic queries instead of making a separate scope for every rel model attribute? - see Dynamic relationships using
+subqueries
+- when are getting different values using the same query, could you use Conditional Aggregates instead.
 - Are you repeating queries when you can use the whereRaw thing as per commit?
 - Can you use setRelationship to avoid circular relationships.
 - Can you use subqueries instead of whereHas to get sql to use indexes?
